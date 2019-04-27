@@ -1,0 +1,97 @@
+<!-- Top navbar with Logo and a hamburger menu for responsive side menu -->
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#sidebar-collapse"><span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span></button>
+            <a class="navbar-brand" href="/"><span>CropX</span>&nbsp;&nbsp;Dashboard</a>
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+<!-- Side menu bar -->
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+    <ul class="nav menu">
+        <li><a href="/"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+        <!-- Sensor Data Charts -->
+        <li><a href="/soil1"><em class="fa fa-bar-chart">&nbsp;</em> Soil 1 Data</a></li>
+        <li><a href="/soil2"><em class="fa fa-bar-chart">&nbsp;</em> Soil 2 Data</a></li>
+        <li class="active"><a href="/soil3"><em class="fa fa-bar-chart">&nbsp;</em> Soil 3 Data</a></li>
+    </ul>
+</div>
+<!--/.sidebar-->
+
+<!-- Dashboard Elements -->
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Soil Water Level&nbsp;<small>( in % )</small></h1>
+        </div>
+    </div>
+    <!--/.row-->
+
+    <div class="row">
+        <div class="col-xs-6 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <div class="easypiechart" id="easypiechart-blue" data-percent="{{value}}"><span
+                            class="percent">{{value}}%</span>
+                    </div>
+                    <p><b>Soil 3</b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Soil Water Graph&nbsp;<small>( in % )</small></h1>
+        </div>
+    </div>
+    <!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Sensor : Soil 3
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em
+                            class="fa fa-toggle-up"></em></span></div>
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.row-->
+</div>
+<!--/.main-->
+<!-- Dashboard Elements -->
+<script>
+    window.onload = function () {
+        var data = {
+            labels: [{{ label }}],
+            datasets: [
+                {
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    data: [{{ data }}]
+    }
+        ]
+    };
+    var chart1 = document.getElementById("line-chart").getContext("2d");
+    window.myLine = new Chart(chart1).Line(data, {
+        responsive: true,
+        scaleLineColor: "rgba(0,0,0,.2)",
+        scaleGridLineColor: "rgba(0,0,0,.05)",
+        scaleFontColor: "#c5c7cc",
+        scaleShowLabels: false,
+        scaleFontSize: 0
+    });
+    };
+</script>
