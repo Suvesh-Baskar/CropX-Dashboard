@@ -3,7 +3,7 @@ window.addEventListener('load', () => {
   let lat;
   let long;
   console.log('Connected');
-  if (!navigator.geolocation) {
+  if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       long = position.coords.longitude;
       lat = position.coords.latitude;
@@ -36,7 +36,7 @@ window.addEventListener('load', () => {
 
           document.getElementById(
             'weatherInfo'
-          ).innerHTML = `Temperature is ${celcius} &deg;C , its ${summary} and ${rainProb}`;
+          ).innerHTML = `Temperature is ${celcius} &deg;C , its ${summary}, and ${rainProb}`;
         });
     });
   } else {

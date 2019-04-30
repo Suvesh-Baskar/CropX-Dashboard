@@ -7,8 +7,11 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 
+const mongoURI =
+  'mongodb+srv://john123:john123@cluster0-lcurc.mongodb.net/test?retryWrites=true';
+
 mongoose
-  .connect('mongodb://localhost/dashboard-dev', { useNewUrlParser: true })
+  .connect(mongoURI, { useNewUrlParser: true })
   .then(() => console.log('MongoDB Connected....'))
   .catch(err => console.log(err));
 
@@ -22,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', require('./routes/api/dashboardApi'));
 app.use('/', require('./routes/dashboard'));
 
-app.listen(3000, () => {
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
   console.log('Server started in port 3000');
 });
