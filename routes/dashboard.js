@@ -5,14 +5,26 @@ const mongoose = require('mongoose');
 require('../models/sensorData');
 const Sensor = mongoose.model('sensorSchema');
 
-var battery, soil1, soil2, soil3, motor, valve1, valve2, valve3;
+var battery1,
+  battery2,
+  soil1,
+  soil2,
+  soil3,
+  motor,
+  valve1,
+  valve2,
+  valve3,
+  aTemp,
+  sTemp,
+  hum,
+  pres;
 router.get('/', (req, res) => {
   Sensor.find({ sensor: 'BAT' })
     .sort({ date: 'desc' })
     .select({ value: 1, _id: 0 })
     .limit(1)
     .then(data => {
-      battery = data[0].value;
+      battery1 = data[0].value;
       Sensor.find({ sensor: 'SOIL1' })
         .sort({ date: 'desc' })
         .select({ value: 1, _id: 0 })
@@ -55,16 +67,49 @@ router.get('/', (req, res) => {
                                 .limit(1)
                                 .then(data => {
                                   valve3 = data[0].value;
-                                  res.render('dashboard', {
-                                    battery,
-                                    soil1,
-                                    soil2,
-                                    soil3,
-                                    motor,
-                                    valve1,
-                                    valve2,
-                                    valve3
-                                  });
+                                  Sensor.find({ sensor: 'STEMP' })
+                                    .sort({ date: 'desc' })
+                                    .select({ value: 1, _id: 0 })
+                                    .limit(1)
+                                    .then(data => {
+                                      sTemp = data[0].value;
+                                      Sensor.find({ sensor: 'ATEMP' })
+                                      .sort({ date: 'desc' })
+                                      .select({ value: 1, _id: 0 })
+                                      .limit(1)
+                                      .then(data => {
+                                        aTemp = data[0].value;
+                                        Sensor.find({ sensor: 'HUM' })
+                                        .sort({ date: 'desc' })
+                                        .select({ value: 1, _id: 0 })
+                                        .limit(1)
+                                        .then(data => {
+                                          hum = data[0].value;
+                                          Sensor.find({ sensor: 'PRES' })
+                                          .sort({ date: 'desc' })
+                                          .select({ value: 1, _id: 0 })
+                                          .limit(1)
+                                          .then(data => {
+                                            pres = data[0].value;
+                                            res.render('dashboard', {
+                                              battery1,
+                                              battery2,
+                                              soil1,
+                                              soil2,
+                                              soil3,
+                                              motor,
+                                              valve1,
+                                              valve2,
+                                              valve3,
+                                              sTemp,
+                                              aTemp,
+                                              hum,
+                                              pres
+                                            });
+                                          });
+                                        });
+                                      });
+                                    });
                                 });
                             });
                         });
@@ -74,6 +119,8 @@ router.get('/', (req, res) => {
         });
     });
 });
+
+
 
 router.get('/soil1', (req, res) => {
   Sensor.find({ sensor: 'SOIL1' })
