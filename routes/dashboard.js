@@ -91,20 +91,27 @@ router.get('/', (req, res) => {
                                                 .limit(1)
                                                 .then(data => {
                                                   pres = data[0].value;
-                                                  res.render('dashboard', {
-                                                    battery1,
-                                                    battery2,
-                                                    soil1,
-                                                    soil2,
-                                                    soil3,
-                                                    motor,
-                                                    valve1,
-                                                    valve2,
-                                                    valve3,
-                                                    sTemp,
-                                                    aTemp,
-                                                    hum,
-                                                    pres
+                                                  Sensor.find({ sensor: 'BAT2' })
+                                                  .sort({ date: 'desc' })
+                                                  .select({ value: 1, _id: 0 })
+                                                  .limit(1)
+                                                  .then(data => {
+                                                    battery2 = data[0].value;
+                                                    res.render('dashboard', {
+                                                      battery1,
+                                                      battery2,
+                                                      soil1,
+                                                      soil2,
+                                                      soil3,
+                                                      motor,
+                                                      valve1,
+                                                      valve2,
+                                                      valve3,
+                                                      sTemp,
+                                                      aTemp,
+                                                      hum,
+                                                      pres
+                                                    });
                                                   });
                                                 });
                                             });
