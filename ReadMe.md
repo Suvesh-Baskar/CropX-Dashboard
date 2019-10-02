@@ -1,11 +1,12 @@
 # Dashboard for a IoT Project
 
-The project here is a web application that can be used to monitor different sensor and actuator parameters of an IoT based Smart Irrigation Project. The application has an API through which it receives data and stores the data in a local database. The frontend receives data through get requests from server. The pages are refreshed automatically after certain timeinterval so users will be shown with the recent status of the IoT application.
+Dashboard to monitor Realtime Moisture, Temperature and Other parameters built with basic server side rendered site. The Whole architechture is built on AWS. Meshlium, a IoT kit from Libelium pushes the data to the AWS IoT Core using MQTT protocol in realtime. It is then pushed to Lamda functions which are serverless functions. Lambda functions cleanses, and enriches the incoming data with weather forecast and stores in the IoT DataStore. The Lambda function also pushes realtime data to a RaspberryPi using the same MQTT protocol. The Logic for controlling the valve is written in RapberryPi.
 
 ---
 
 ## Tech Stack
-
+- Libelium Meshlium IoT Kit
+- AWS IoT Core
 - Node.js
 - Express.js
 - MongoDb(Local Hosted)
@@ -15,3 +16,4 @@ The project here is a web application that can be used to monitor different sens
 ---
 
 Front end template used - **Lumino Admin Bootstrap Template**
+Future Scope : **Building the same with React or anyfront end frameworks**
